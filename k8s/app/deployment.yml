@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: students-fe
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-students-fe
+  namespace: students-fe
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: students-fe
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: students-fe
+    spec:
+      containers:
+      - image: 993619579/students-fe
+        imagePullPolicy: Always
+        name: students-fe
+        ports:
+        - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-students-fe
+  namespace: students-fe
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+  selector:
+    app.kubernetes.io/name: students-fe
