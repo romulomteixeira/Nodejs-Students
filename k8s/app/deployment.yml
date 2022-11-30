@@ -33,8 +33,10 @@ metadata:
   name: service-students-fe
   namespace: students-fe
 spec:
-  type: LoadBalancer
   ports:
     - port: 3000
+      targetPort: 3000
+      protocol: TCP
+  type: NodePort
   selector:
     app.kubernetes.io/name: students-fe
